@@ -7,8 +7,8 @@ def hello(response):
     return HttpResponse('Hello')
 
 
-def equipment_view(request, pk):
-    equipment = Equipment.objects.get(id=pk)
+def equipment_view(request, label):
+    equipment = Equipment.objects.get(label=label)
     context = {
         'equipments': equipment,
     }

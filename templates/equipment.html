@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipments</title>
 </head>
+
 <body>
 
     <p>
 
-        <h1>{{ equipments.name }}</h1>
-        <h2>{{ equipments.label }}</h2>
-        <h2>{{ equipments.location }}</h2>
+    <h1>{{ equipments.name }}</h1>
+    <h2>{{ equipments.label }}</h2>
+    <h2>{{ equipments.location }}</h2>
 
-        <h3> Image here </h3>
+    <img src="{{MEDIA_URL}}{{equipments.image.url}}" alt="equipment" width="350" />
+
 
 
     </p>
-    
+
 </body>
+
 </html>

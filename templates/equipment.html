@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipments</title>
-</head>
-
-<body>
-
-    <p>
-
-    <h1>{{ equipments.name }}</h1>
-    <h2>{{ equipments.label }}</h2>
-    <h2>{{ equipments.location }}</h2>
-
-    <img src="{{MEDIA_URL}}{{equipments.image}}" alt="equipment" width="350" />
+{% extends 'base.html' %}
+{% block content %}
 
 
+<!-- <div class="container d-flex h-100">
 
-    </p>
+</div> -->
 
-</body>
+<div class="col text-center justify-content-center align-self-center mt-5">
+    <div class="row justify-content-center align-self-center">
+        <div class="card" style="width: 500px;">
+            <img src="{{MEDIA_URL}}{{equipments.image}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="display-1">{{ equipments.name }}</h5>
+              <p class="card-text">Label: {{ equipments.label }}</p>
+              <p class="card-text">Location: {{ equipments.location }}</p>
+              <p class="card-text">Note: {{ equipments.note }}</p>
+    
+            </div>
+          </div>
+    </div>
+</div>
 
-</html>
+
+
+{% endblock content %}

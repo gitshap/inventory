@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from equipment.models import Equipment
 
 
-def hello(response):
+def hello():
     return HttpResponse('Hello')
 
 
@@ -14,6 +14,3 @@ def equipment_view(request, label):
     }
     template_name = 'equipment.html'
     return render(request, template_name, context=context)
-
-
-

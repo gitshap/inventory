@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Equipment(models.Model):
+    """ Something """
     name = models.CharField(max_length=255)
     label = models.CharField(max_length=255, unique=True)
     location = models.CharField(max_length=255)

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Equipment(models.Model):
-    """ Something """
+    """ Equipment Model """
     name = models.CharField(max_length=255)
     label = models.CharField(max_length=255, unique=True)
     location = models.CharField(max_length=255)
@@ -19,3 +19,6 @@ class Equipment(models.Model):
     @property
     def get_name(self):
         return self.name
+
+
+# TODO: Create disposable model

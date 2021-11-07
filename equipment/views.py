@@ -8,7 +8,7 @@ def hello():
     return HttpResponse('Hello')
 
 
-def csv_importer(request):
+def csv_to_import(request):
     with open('monitors.csv') as csv_file:
 
         csv_reader = csv.reader(csv_file, delimiter=',')

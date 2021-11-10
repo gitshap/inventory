@@ -1,12 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from equipment.models import Equipment
 import csv
 
 
-def hello():
-    return HttpResponse('Hello')
+def home_view(request):
+    template_name = 'home.html'
 
+    total_equipment = Equipment.objects.all().count()
+
+    context = {
+        'total_equipment': total_equipment,
+    }
+
+    return render(request, template_name, context=context)
 
 def csv_to_import(request):
     with open('monitors.csv') as csv_file:

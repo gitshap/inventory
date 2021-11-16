@@ -8,6 +8,7 @@ def home_view(request):
 
     total_equipment = Equipment.objects.all().count()
 
+    # TODO: Create recent view
     context = {
         'total_equipment': total_equipment,
     }
@@ -34,3 +35,6 @@ def equipment_view(request, label):
     }
     template_name = 'equipment.html'
     return render(request, template_name, context=context)
+
+
+

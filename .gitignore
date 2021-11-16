@@ -1,3 +1,4 @@
 equipment/__pycache__/models.cpython-39.pyc
 equipment/__pycache__/views.cpython-39.pyc
 inventory_qr/__pycache__/settings.cpython-39.pyc
+.env

@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from equipment.models import Equipment
+from django.contrib.auth.decorators import permission_required
 import csv
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+
 
 
 def home_view(request):
@@ -27,7 +31,7 @@ def csv_to_import(request):
         print(f'Processed {line_count} lines.')
     return render(request, template_name='import_csv.html', context=None)
 
-
+@permission_required('equipment.view_equipment', login_url='login_view')
 def equipment_view(request, label):
     equipment = Equipment.objects.get(label=label)
     context = {
@@ -37,4 +41,18 @@ def equipment_view(request, label):
     return render(request, template_name, context=context)
 
 
+
+def login_view(request):
+    form = AuthenticationForm()
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect(home_view)
+    template_name = 'login.html' 
+    context = {
+        'form': form
+    }
+    return render(request, template_name, context=context)
 

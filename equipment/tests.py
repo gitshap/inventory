@@ -10,3 +10,5 @@ class EquipmentTestCase(TestCase):
         """ Test if the model method `get_name` is working and returns the name"""
         equipment = Equipment.objects.get(label='KB')
         self.assertEqual(equipment.get_name, 'Keyboard')
+
+    

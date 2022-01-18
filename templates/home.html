@@ -1,14 +1,170 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
 
-{% block content %}
+<!-- Navbar -->
+<header>
 
-<p>Total Equipment Logged -  {{ total_equipment }}</p>
+  <div class="py-2 px-2 lg:mx-4 xl:mx-24">
+    <div class="">
+      <nav class="flex items-center justify-between flex-wrap">
+        <div class="flex items-center flex-no-shrink text-white mr-6">
+          <img
+            src="https://nemtroutes.com/img/logo/logo.png"
+            alt=""
+            class="h-12 xl:h-20 mr-2"
+          />
+        </div>
+        <div class="block lg:hidden">
+          <button
+            class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white"
+          >
+            <svg
+              class="fill-current h-6 w-6 text-gray-700"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </svg>
+          </button>
+        </div>
+        <div
+          id="main-nav"
+          class="w-full flex-grow lg:flex items-center lg:w-auto hidden"
+        >
+          <div class="text-sm lg:flex-grow mt-2 animated jackinthebox xl:mx-8">
+            <a
+              href="#home"
+              class="block lg:inline-block text-lg font-bold text-green-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
+            >
+              HOME
+            </a>
+            <a
+              href="#home"
+              class="block lg:inline-block text-lg font-bold text-gray-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
+            >
+              Create New Equipment
+            </a>
+            <a
+              href="#home"
+              class="block lg:inline-block text-lg font-bold text-gray-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
+            >
+              Equipment per Category
+            </a>
+     
+            
+          </div>
+          <div class="text-2xl my-1 mx-3">
+            <img src="img/shopping.png" class="h-6" alt="" />
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
 
-<h3>TODO</h3>
-<p>Recently logged ( clickable )</p>
-<p>Search</p>
-<p>Filter</p>
+<script>
+  // Navbar Toggle
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get all "navbar-burger" elements
+    var $navbarBurgers = Array.prototype.slice.call(
+      document.querySelectorAll(".navbar-burger"),
+      0
+    );
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+      // Add a click event on each of them
+      $navbarBurgers.forEach(function ($el) {
+        $el.addEventListener("click", function () {
+          // Get the "main-nav" element
+          var $target = document.getElementById("main-nav");
+
+          // Toggle the class on "main-nav"
+          $target.classList.toggle("hidden");
+        });
+      });
+    }
+  });
+</script>
+
+<!-- Navbar End -->
 
 
+<!-- User -->
+
+
+<div class="md:container md:mx-auto">
+    <h1 class="text-2xl">Hi, logged in user</h1>
+
+</div>
+
+<!-- End User -->
+
+
+<!-- Analytics Start -->
+
+
+  <section class="text-gray-600 body-font">
+    <div class="container py-20 mx-auto">
+      <div class="flex flex-wrap w-full mb-10">
+        <div class="w-full mb-6 lg:mb-0">
+          <h1
+            class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900"
+          >
+            Analytics
+          </h1>
+          <div class="h-1 w-20 bg-green-500 rounded"></div>
+        </div>
+      </div>
+      <div class="flex flex-wrap -m-4 text-center">
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
+            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
+              {{ total_equipment }}
+            </h2>
+            <p class="leading-relaxed text-gray-100 font-bold">
+              Total Logged Equipment
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
+            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
+              {{ total_equipment }}
+            </h2>
+            <p class="leading-relaxed text-gray-100 font-bold">
+              Total Logged Equipment
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
+            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
+              {{ total_equipment }}
+            </h2>
+            <p class="leading-relaxed text-gray-100 font-bold">
+              Total Logged Equipment
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 sm:w-1/4 w-1/2">
+          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
+            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
+              {{ total_equipment }}
+            </h2>
+            <p class="leading-relaxed text-gray-100 font-bold">
+              Total Logged Equipment
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Analytics End -->
 {% endblock content %}

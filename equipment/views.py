@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from equipment.models import Equipment
+from markupsafe import re
+from equipment.models import Equipment, Licenses, Staff
 from django.contrib.auth.decorators import permission_required
 import csv
 from django.contrib.auth import authenticate, login
@@ -56,3 +57,12 @@ def login_view(request):
     }
     return render(request, template_name, context=context)
 
+
+
+def licenses_view(request):
+    licenses = Licenses.objects.all()
+    template_name = 'licenses.html'
+    context = {
+        'licenses': licenses
+    }
+    return render(request, template_name, context=context)

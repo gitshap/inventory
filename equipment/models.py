@@ -36,8 +36,6 @@ class Equipment(models.Model):
     owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
 
 
-    # TODO: Create Owner
-
     def __str__(self):
         return (
             f"{self.name}({self.label}) is in {self.location} with the note {self.note}"
@@ -65,7 +63,6 @@ class Disposable(models.Model):
 class Licenses(models.Model):
     name = models.CharField(max_length=255)
     key = models.CharField(max_length=100)
-
     owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
 

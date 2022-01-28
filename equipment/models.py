@@ -1,6 +1,18 @@
 from django.db import models
 
 
+
+# Staff names, email to be assigned to equipment/license
+class Staff(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255, blank=True)
+    anydesk_id = models.CharField(max_length=15, blank=True)
+    def __str__(self):
+        return f'Staff Name: {self.name}, Email: {self.email}'
+    
+    
+    
 class Equipment(models.Model):
     """ Equipment Model """
 
@@ -21,6 +33,8 @@ class Equipment(models.Model):
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
+    owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
+
 
     # TODO: Create Owner
 
@@ -46,13 +60,7 @@ class Disposable(models.Model):
     def __str__(self):
         return self.name
 
-class Staff(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    email = models.CharField(max_length=255)
-    designation = models.CharField(max_length=255, blank=True)
-    anydesk_id = models.CharField(max_length=15, blank=True)
-    def __str__(self):
-        return f'Staff Name: {self.name}, Email: {self.email}'
+
 
 class Licenses(models.Model):
     name = models.CharField(max_length=255)

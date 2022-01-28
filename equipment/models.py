@@ -23,6 +23,8 @@ class Equipment(models.Model):
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
 
 
+    # TODO: Create Owner
+
     def __str__(self):
         return (
             f"{self.name}({self.label}) is in {self.location} with the note {self.note}"
@@ -44,4 +46,17 @@ class Disposable(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Licenses(models.Model):
+    name = models.CharField(max_length=255)
+    key = models.CharField(max_length=100)
+    
+     # TODO: make this a foreign key to users
+    owner = models.CharField(max_length=255)
+    status = models.BooleanField(default=False)   
+    
+    def __str__(self):
+        return f'{self.owner} has current ownership of {self.name} with the key {self.key}'
+    
 

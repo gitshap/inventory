@@ -22,7 +22,6 @@ class Equipment(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
 
-
     # TODO: Create Owner
 
     def __str__(self):
@@ -47,16 +46,21 @@ class Disposable(models.Model):
     def __str__(self):
         return self.name
 
+class Staff(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255)
+    designation = models.CharField(max_length=255, blank=True)
+    def __str__(self):
+        return f'Staff Name: {self.name}, Email: {self.email}'
 
 class Licenses(models.Model):
     name = models.CharField(max_length=255)
     key = models.CharField(max_length=100)
-    
-     # TODO: make this a foreign key to users
-    owner = models.CharField(max_length=255)
-    status = models.BooleanField(default=False)   
-    
+
+    owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+
     def __str__(self):
         return f'{self.owner} has current ownership of {self.name} with the key {self.key}'
-    
+
 

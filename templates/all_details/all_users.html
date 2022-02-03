@@ -1,0 +1,565 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+
+<script
+  src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+  defer
+></script>
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
+  <!-- Navbar -->
+  <div
+    @click.away="open = false"
+    class="flex flex-col w-full md:w-64 text-green-700 bg-white dark-mode:text-gray-200 dark-mode:bg-green-800 flex-shrink-0 shadow-xl"
+    x-data="{ open: false }"
+  >
+    <div
+      class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between"
+    >
+      <!-- Logo -->
+      <img
+        src="{% static 'equipment/shap-logo.png' %}"
+        width="50"
+        alt="My image"
+      />
+      <a
+        href="#"
+        class="px-3 text-lg font-semibold tracking-widest text-green-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+        >SHAP IT Asset Management</a
+      >
+      <button
+        class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline"
+        @click="open = !open"
+      >
+        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+          <path
+            x-show="!open"
+            fill-rule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          ></path>
+          <path
+            x-show="open"
+            fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <nav
+      :class="{'block': open, 'hidden': !open}"
+      class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto"
+    >
+      <a
+        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg hover:text-green-900  hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
+        href="{% url 'home_view' %}"
+        >Home</a
+      >
+      <a
+        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent focus:text-green-900 hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
+        href="{% url 'list_equipments' %}"
+        >Equipments</a
+      >
+      <a
+        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
+        href="{% url 'list_licenses' %}"
+        >Licenses</a
+      >
+      <a
+        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-green-200 rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
+        href="{% url 'list_users' %}"
+        >Users</a
+      >
+      <!-- <div @click.away="open = false" class="relative" x-data="{ open: false }">
+        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+          <span>Dropdown</span>
+          <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+          <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
+          </div>
+        </div>
+      </div> -->
+      <a
+        class="block content-end px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
+        href="#"
+        >Logout</a
+      >
+    </nav>
+  </div>
+
+
+
+
+  <!-- Tables -->
+  
+  <div class="container mx-auto m-8">
+
+      <!-- Cards -->
+   <div class="mb-2">
+      <!-- Code block starts -->
+      <dh-component>
+        <div class="container flex justify-center mx-auto pt-8">
+          <div>
+            <h1
+              class="xl:text-4xl text-3xl text-center text-green-800 font-extrabold"
+            >
+              Users
+            </h1>
+          </div>
+        </div>
+        <div class="w-full bg-white px-10 pt-10">
+          <div class="container mx-auto">
+            <div
+              role="list"
+              aria-label="Behind the scenes People "
+              class="lg:flex md:flex sm:flex items-center xl:justify-around flex-wrap md:justify-around sm:justify-around lg:justify-around"
+            >
+              <div
+                role="listitem"
+                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
+              >
+                <div class="rounded overflow-hidden shadow-md bg-white">
+                  <div class="absolute -mt-20 w-full flex justify-center">
+                    <div class="h-32 w-32">
+                      <img
+                        src="{% static 'equipment/assets.png' %}"
+                        alt="Assets"
+                        role="img"
+                        class="rounded-full object-cover h-full w-full shadow-md"
+                      />
+                    </div>
+                  </div>
+                  <div class="px-6 mt-16">
+                    <h1 class="font-bold text-3xl text-center mb-1">
+                      15
+                    </h1>
+                    <p class="text-gray-800 text-lg font-extrabold text-center">
+                     Equipment On Hand
+                    </p>
+                    <p
+                      class="text-center text-gray-600 text-base pt-3 font-normal"
+                    >
+                    
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div
+              role="listitem"
+              class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
+            >
+              <div class="rounded overflow-hidden shadow-md bg-white">
+                <div class="absolute -mt-20 w-full flex justify-center">
+                  <div class="h-32 w-32">
+                    <img
+                      src="{% static 'equipment/assets.png' %}"
+                      alt="Assets"
+                      role="img"
+                      class="rounded-full object-cover h-full w-full shadow-md"
+                    />
+                  </div>
+                </div>
+                <div class="px-6 mt-16">
+                  <h1 class="font-bold text-3xl text-center mb-1">
+                    15
+                  </h1>
+                  <p class="text-gray-800 text-lg font-extrabold text-center">
+                   Equipment Used
+                  </p>
+                  <p
+                    class="text-center text-gray-600 text-base pt-3 font-normal"
+                  >
+                 
+
+                </div>
+              </div>
+            </div>
+
+        
+
+            </div>
+          </div>
+        </div>
+      </dh-component>
+      <!-- Code block ends -->
+      <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+    </div>
+
+  <!-- Cards End -->
+
+    <div class="flex flex-col">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Title
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Role
+                    </th>
+                    <th scope="col" class="relative px-6 py-3">
+                      <span class="sr-only">Edit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-12 w-12 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-2">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="{% static 'equipment/choppy_icon.png' %}" alt="">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Choppy ChopDog
+                          </div>
+                          <div class="text-sm text-gray-500">
+                            choppydog.chopdog@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-900">Professional Stretcher</div>
+                      <div class="text-sm text-gray-500">Dog</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Active
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      Admin
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    </td>
+                  </tr>
+      
+                  <!-- More people... -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- End tables -->
+
+  </div>
+
+
+
+{% endblock content %}

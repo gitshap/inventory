@@ -61,8 +61,28 @@ def login_view(request):
 
 def licenses_view(request):
     licenses = Licenses.objects.all()
-    template_name = 'licenses.html'
+    template_name = 'all_details/all_licenses.html'
     context = {
         'licenses': licenses
+    }
+    return render(request, template_name, context=context)
+
+
+def list_equipments(request):
+    equipments = Equipment.objects.all()
+    template_name = 'all_details/all_equipment.html'
+    context = {
+        'equipments': equipments
+    }
+    return render(request, template_name, context=context)
+
+
+
+
+def list_users(request):
+    staffs = Staff.objects.all()
+    template_name = 'all_details/all_users.html'
+    context = {
+        'staffs': staffs
     }
     return render(request, template_name, context=context)

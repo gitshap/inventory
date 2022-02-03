@@ -8,8 +8,10 @@ class Staff(models.Model):
     email = models.CharField(max_length=255)
     designation = models.CharField(max_length=255, blank=True)
     anydesk_id = models.CharField(max_length=15, blank=True)
+
+    
     def __str__(self):
-        return f'Staff Name: {self.name}, Email: {self.email}'
+        return f'{self.name}'
     
     
     

@@ -34,7 +34,7 @@ class Equipment(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
     owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
-
+    
 
     def __str__(self):
         return (

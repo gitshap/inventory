@@ -1,170 +1,174 @@
 {% extends 'base.html' %} {% block content %}
+{% load static %}
 
 
-<!-- Navbar -->
-<header>
 
-  <div class="py-2 px-2 lg:mx-4 xl:mx-24">
-    <div class="">
-      <nav class="flex items-center justify-between flex-wrap">
-        <div class="flex items-center flex-no-shrink text-white mr-6">
-          <img
-            src="https://nemtroutes.com/img/logo/logo.png"
-            alt=""
-            class="h-12 xl:h-20 mr-2"
-          />
-        </div>
-        <div class="block lg:hidden">
-          <button
-            class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white"
-          >
-            <svg
-              class="fill-current h-6 w-6 text-gray-700"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
-        <div
-          id="main-nav"
-          class="w-full flex-grow lg:flex items-center lg:w-auto hidden"
-        >
-          <div class="text-sm lg:flex-grow mt-2 animated jackinthebox xl:mx-8">
-            <a
-              href="#home"
-              class="block lg:inline-block text-lg font-bold text-green-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
-            >
-              HOME
-            </a>
-            <a
-              href="#home"
-              class="block lg:inline-block text-lg font-bold text-gray-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
-            >
-              Create New Equipment
-            </a>
-            <a
-              href="#home"
-              class="block lg:inline-block text-lg font-bold text-gray-500 sm:hover:border-orange-400 hover:text-green-300 mx-2 focus:text-blue-500 p-1 hover:bg-gray-300 sm:hover:bg-transparent rounded-lg"
-            >
-              Equipment per Category
-            </a>
-     
-            
-          </div>
-          <div class="text-2xl my-1 mx-3">
-            <img src="img/shopping.png" class="h-6" alt="" />
-          </div>
-        </div>
-      </nav>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<div class="md:flex flex-col md:flex-row md:min-h-screen w-full">
+  <!-- Navbar -->
+  <div @click.away="open = false" class="flex flex-col w-full md:w-64 text-green-700 bg-white dark-mode:text-gray-200 dark-mode:bg-green-800 flex-shrink-0" x-data="{ open: false }">
+    <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
+      <!-- Logo -->
+      <img src="{% static 'equipment/shap-logo.png' %}" width="50"  alt="My image">
+      <a href="#" class="px-3 text-lg font-semibold tracking-widest text-green-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">SHAP IT Asset Management</a>
+      <button class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline" @click="open = !open">
+        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+          <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+          <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
     </div>
+    <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-green-200 rounded-lg  hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline" href="#">Home</a>
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline" href="#">Equipments</a>
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline" href="#">Licenses</a>
+      <a class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline" href="#">Users</a>
+      <div @click.away="open = false" class="relative" x-data="{ open: false }">
+        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+          <span>Dropdown</span>
+          <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+          <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
+            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
+          </div>
+        </div>
+      </div>
+    </nav>
   </div>
-</header>
+  <!-- Navbar End -->
+  <div class="container mx-auto m-8">
+   
+    <!-- Analytics Start -->
 
-<script>
-  // Navbar Toggle
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get all "navbar-burger" elements
-    var $navbarBurgers = Array.prototype.slice.call(
-      document.querySelectorAll(".navbar-burger"),
-      0
-    );
+    <div class="mb-2">
+      <!-- Code block starts -->
+      <dh-component>
+          <div class="container flex justify-center mx-auto pt-8">
+              <div>
+     
+                  <h1 class="xl:text-4xl text-3xl text-center text-green-800 font-extrabold ">SHAP ASSETS</h1>
+              </div>
+          </div>
+          <div class="w-full bg-white px-10 pt-10">
+              <div class="container mx-auto">
+                  <div role="list" aria-label="Behind the scenes People " class="lg:flex md:flex sm:flex items-center xl:justify-between flex-wrap md:justify-around sm:justify-around lg:justify-around">
+                      <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                          <div class="rounded overflow-hidden shadow-md bg-white">
+                              <div class="absolute -mt-20 w-full flex justify-center">
+                                  <div class="h-32 w-32">
+                                      <img src="{% static 'equipment/inventory.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                                  </div>
+                              </div>
+                              <div class="px-6 mt-16">
+                                  <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                                  <p class="text-gray-800 text-lg font-extrabold text-center">Total Assets</p>
+                                  <p class="text-center text-gray-600 text-base pt-3 font-normal">Total Number of Assets in SHAP that ranges from keyboards to licenses</p>
 
-    // Check if there are any navbar burgers
-    if ($navbarBurgers.length > 0) {
-      // Add a click event on each of them
-      $navbarBurgers.forEach(function ($el) {
-        $el.addEventListener("click", function () {
-          // Get the "main-nav" element
-          var $target = document.getElementById("main-nav");
+                              </div>
+                          </div>
+                      </div>
 
-          // Toggle the class on "main-nav"
-          $target.classList.toggle("hidden");
-        });
-      });
-    }
-  });
-</script>
+                      <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                        <div class="rounded overflow-hidden shadow-md bg-white">
+                            <div class="absolute -mt-20 w-full flex justify-center">
+                                <div class="h-32 w-32">
+                                    <img src="{% static 'equipment/license-plate.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                                </div>
+                            </div>
+                            <div class="px-6 mt-16">
+                                <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                                <p class="text-gray-800 text-lg font-extrabold text-center">Total Licenses</p>
+                                <p class="text-center text-gray-600 text-base pt-3 font-normal">Licenses from Microsoft Office to Windows Pro 10</p>
 
-<!-- Navbar End -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                      <div class="rounded overflow-hidden shadow-md bg-white">
+                          <div class="absolute -mt-20 w-full flex justify-center">
+                              <div class="h-32 w-32">
+                                  <img src="{% static 'equipment/deployment.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                              </div>
+                          </div>
+                          <div class="px-6 mt-16">
+                              <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                              <p class="text-gray-800 text-lg font-extrabold text-center">Total Deployed</p>
+                              <p class="text-center text-gray-600 text-base pt-3 font-normal">Deployed assets</p>
+
+                          </div>
+                      </div>
+                  </div>
+
+                  <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                    <div class="rounded overflow-hidden shadow-md bg-white">
+                        <div class="absolute -mt-20 w-full flex justify-center">
+                            <div class="h-32 w-32">
+                                <img src="{% static 'equipment/man.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                            </div>
+                        </div>
+                        <div class="px-6 mt-16">
+                            <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                            <p class="text-gray-800 text-lg font-extrabold text-center">Total Users</p>
+                            <p class="text-center text-gray-600 text-base pt-3 font-normal">Total Number of Users/Staff in SHAP</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                  <div class="rounded overflow-hidden shadow-md bg-white">
+                      <div class="absolute -mt-20 w-full flex justify-center">
+                          <div class="h-32 w-32">
+                              <img src="{% static 'equipment/garbage-truck.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                          </div>
+                      </div>
+                      <div class="px-6 mt-16">
+                          <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                          <p class="text-gray-800 text-lg font-extrabold text-center">Total Disposed Equipment</p>
+                          <p class="text-center text-gray-600 text-base pt-3 font-normal">Disposed equipment(junk)</p>
+
+                      </div>
+                  </div>
+              </div>
+
+              <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                <div class="rounded overflow-hidden shadow-md bg-white">
+                    <div class="absolute -mt-20 w-full flex justify-center">
+                        <div class="h-32 w-32">
+                            <img src="{% static 'equipment/radio.png' %}" alt="Assets" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                        </div>
+                    </div>
+                    <div class="px-6 mt-16">
+                        <h1 class="font-bold text-3xl text-center mb-1"> {{ total_equipment }} </h1>
+                        <p class="text-gray-800 text-lg font-extrabold text-center">Total Unifi AP</p>
+                        <p class="text-center text-gray-600 text-base pt-3 font-normal">Unifi Access Points UP</p>
+
+                    </div>
+                </div>
+            </div>
+                     
+
+                  </div>
+              </div>
+          </div>
+      </dh-component>
+      <!-- Code block ends -->
+      <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+  </div>
 
 
-<!-- User -->
-
-
-<div class="md:container md:mx-auto">
-    <h1 class="text-2xl">Hi, logged in user</h1>
-
+    <!-- Analytics End -->
+  </div>
 </div>
 
-<!-- End User -->
 
 
-<!-- Analytics Start -->
 
+<!-- Content Start -->
 
-  <section class="text-gray-600 body-font">
-    <div class="container py-20 mx-auto">
-      <div class="flex flex-wrap w-full mb-10">
-        <div class="w-full mb-6 lg:mb-0">
-          <h1
-            class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900"
-          >
-            Analytics
-          </h1>
-          <div class="h-1 w-20 bg-green-500 rounded"></div>
-        </div>
-      </div>
-      <div class="flex flex-wrap -m-4 text-center">
-        <div class="p-4 sm:w-1/4 w-1/2">
-          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
-            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
-              {{ total_equipment }}
-            </h2>
-            <p class="leading-relaxed text-gray-100 font-bold">
-              Total Logged Equipment
-            </p>
-          </div>
-        </div>
-
-        <div class="p-4 sm:w-1/4 w-1/2">
-          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
-            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
-              {{ total_equipment }}
-            </h2>
-            <p class="leading-relaxed text-gray-100 font-bold">
-              Total Logged Equipment
-            </p>
-          </div>
-        </div>
-
-        <div class="p-4 sm:w-1/4 w-1/2">
-          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
-            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
-              {{ total_equipment }}
-            </h2>
-            <p class="leading-relaxed text-gray-100 font-bold">
-              Total Logged Equipment
-            </p>
-          </div>
-        </div>
-
-        <div class="p-4 sm:w-1/4 w-1/2">
-          <div class="bg-green-500 rounded-lg p-2 xl:p-6">
-            <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">
-              {{ total_equipment }}
-            </h2>
-            <p class="leading-relaxed text-gray-100 font-bold">
-              Total Logged Equipment
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- Analytics End -->
+<!-- Content End -->
 {% endblock content %}

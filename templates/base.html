@@ -1,14 +1,22 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>
         SHAP Inventory</title>
-        <link rel="icon" href="/logo.png">
+        <link rel="icon" href="{% static 'equipment/shap-logo.png' %}">
+        <style>
+            .wrapper {
+height: 500px !important;
+}
+        </style>
 </head>
 
 <body>

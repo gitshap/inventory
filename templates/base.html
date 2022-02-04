@@ -18,7 +18,7 @@
       #journal-scroll::-webkit-scrollbar {
         width: 8px;
         cursor: pointer;
-        
+
         /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/
       }
       #journal-scroll::-webkit-scrollbar-thumb:vertical:hover {
@@ -32,17 +32,28 @@
       #journal-scroll::-webkit-scrollbar-thumb {
         cursor: pointer;
         background-color: rgb(223, 252, 220);
-        border: 1px  rgba(255, 227, 16);
+        border: 1px rgba(255, 227, 16);
         border-radius: 15pt;
         /*outline: 1px solid slategrey;*/
+      }
+      nav {
+        z-index: 9999;
+      }
+      
+      /* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
       }
     </style>
   </head>
 
   <body>
     {% block content %} {% endblock content %}
-
-
-
   </body>
 </html>

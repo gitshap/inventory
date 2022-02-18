@@ -1,933 +1,283 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
-<script
-  src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-  defer
-></script>
+<main class="flex flex-col h-screen" x-data="{ isShowing: true}" id="journal-scroll">
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar  -->
+    <div class="lg:flex bg-white w-56 transition-all duration-300 ease-in-out" :class="{ '-ml-56': !isShowing}">
+      <div class="flex flex-col" >
 
-<div class="md:flex flex-col h-screen md:flex-row md:min-h-screen w-full">
-  <!-- Navbar -->
-  <div
-    @click.away="open = false"
-    class="flex flex-col z-9999 sticky top-0 w-full md:w-64 text-green-700 bg-white dark-mode:text-gray-200 dark-mode:bg-green-800 flex-shrink-0 shadow-xl"
-    x-data="{ open: false }"
-  >
-    <div
-      class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between"
-    >
-      <!-- Logo -->
-      <img
-        src="{% static 'equipment/shap-logo.png' %}"
-        width="50"
-        alt="My image"
-      />
-      <a
-        href="#"
-        class="px-3 text-lg font-semibold tracking-widest text-green-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
-        >SHAP IT Asset Management</a
-      >
-      <button
-        class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline"
-        @click="open = !open"
-      >
-        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
-          <path
-            x-show="!open"
-            fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          ></path>
-          <path
-            x-show="open"
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </button>
+        <div class="flex justify-center items-center">
+          <h2 class="m-2 p-2"><img src="{% static 'equipment/shap-logo.png' %}" alt="shap-logo" class="w-16 h-16 object-contain">
+          </h2>
+          <h2 class="font-semibold text-green-700"> SHAP ASSET Management</h2>
+        </div>
+     
+
+        <div class="flex flex-col space-y-1 rounded-2xl">
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 mb-0 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <h1 class="ml-2">Dashboard</h1></a
+          >
+
+     
+      
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+            <h1 class="ml-2">Assets</h1></a
+          >
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <h1 class="ml-2">Accessories</h1></a
+          >
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+            </svg>
+            <h1 class="ml-2">Consumables</h1></a
+          >
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+            </svg>
+            <h1 class="ml-2">Components</h1></a
+          >
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg> <h1 class="ml-2">Users</h1></a
+          >
+          <a
+            href="#"
+            class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg> 
+            <h1 class="ml-2">Help</h1></a
+          >
+        </div>
+      </div>
     </div>
-    <nav
-      :class="{'block': open, 'hidden': !open}"
-      class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto"
-    >
-      <a
-        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-green-200 rounded-lg hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-        href="{% url 'home_view' %}"
-        >Home</a
-      >
-      <a
-        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-        href="{% url 'list_equipments' %}"
-        >Equipments</a
-      >
-      <a
-        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-        href="{% url 'list_licenses' %}"
-        >Licenses</a
-      >
-      <a
-        class="block px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-        href="{% url 'list_users' %}"
-        >Users</a
-      >
-      <!-- <div @click.away="open = false" class="relative" x-data="{ open: false }">
-        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-          <span>Dropdown</span>
-          <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-        </button>
-        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
-          <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
-            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
+    <!-- Sidebar End -->
+    <div class="flex flex-1 flex-col">
+      <!-- Nav -->
+      <nav>
+        <div class="flex justify-between bg-green-800 h-14 p-4">
+
+          <div class="flex">
+            <div>
+              <button @click="isShowing = !isShowing" >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white transition-all duration-500 origin-center hover:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+    
+          </div>
+
+             <a href="#" class="flex">
+
+            <h2 class="ml-2 text-white">Search</h2></a>
+                   
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+         
+
+          <div class="flex justify-end space-x-1">
+            <button class="flex" x-on:click="console.log('Modal Here')">
+          <h1 class="text-green-900 bg-yellow-300 rounded px-5 h-6 hover:text-yellow-300 hover:bg-green-900">Create New</h1></button>
+            <a href="#" class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg></a>
+            <a href="#" class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg></a>
           </div>
         </div>
-      </div> -->
-      <hr />
-      <a
-        class="block content-end px-4 py-2 mt-2 text-sm font-semibold text-green-900 bg-transparent rounded-lg dark-mode:bg-transparent hover:text-green-900 focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-        href="#"
-        >Logout</a
-      >
-    </nav>
-  </div>
-  <!-- Navbar End -->
+      </nav>
+      <!-- Nav End -->
+
+      <!-- Content -->
+      <div class="flex flex-col flex-1 bg-gray-50 overflow-y-auto px-8 pt-6" id="journal-scroll">
+
+        <div class="flex flex-col">
+                <!-- Cards -->
+      <div class="grid m-2 grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-5">
+  
+          <div class="flex transform transition duration-100 hover:scale-105 justify-between bg-white p-8 h-48 min-w-full rounded shadow-md justify-center items-center">
+            <h1 class="bg-yellow-300 rounded p-4 text-green-900 shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+            </h1>
+            <div class="items-center justify-center">
+              <h1 class="font-semibold text-5xl text-center">5008</h1>
+              <h1 class="font-bold text-sm text-center">ASSETS</h1>
+            </div>
+            <div class="flex">
+              <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+              </svg></h1>
+              <h1 class="text-green-600 text-xl font-semibold">30%</h1>
+            </div>
+          </div>
+
+       
+
+        <div class="flex transform transition duration-100 hover:scale-105 justify-between bg-white p-8 h-48 min-w-full rounded shadow-md justify-center items-center hover:ease-out duration-300">
+          <h1 class="bg-yellow-300 rounded p-4 text-green-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </h1>
+          <div class="items-center justify-center">
+            <h1 class="font-semibold text-5xl text-center">312</h1>
+            <h1 class="font-bold text-sm text-center">ACCESSORIES</h1>
+          </div>
+          <div class="flex">
+            <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+            </svg></h1>
+            <h1 class="text-green-600 text-xl font-semibold">16%</h1>
+          </div>
+        </div>
+
+        <div class="flex transform transition duration-100 hover:scale-105 justify-between bg-white p-8 h-48 min-w-full rounded shadow-md justify-center items-center hover:ease-out duration-300">
+          <h1 class="bg-yellow-300 rounded p-4 text-green-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+            </svg>
+          </h1>
+          <div class="items-center justify-center">
+            <h1 class="font-semibold text-5xl text-center">552</h1>
+            <h1 class="font-bold text-sm text-center">CONSUMABLES</h1>
+          </div>
+          <div class="flex">
+            <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+            </svg></h1>
+            <h1 class="text-red-600 text-xl font-semibold">60%</h1>
+          </div>
+        </div>
+
+        <div class="flex transform transition duration-100 hover:scale-105 justify-between bg-white p-8 h-48 min-w-full rounded shadow-md justify-center items-center hover:ease-out duration-300">
+          <h1 class="bg-yellow-300 rounded p-4 text-green-900 shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+            </svg>
+          </h1>
+          <div class="items-center justify-center">
+            <h1 class="font-semibold text-5xl text-center">32</h1>
+            <h1 class="font-bold text-sm text-center">COMPONENTS</h1>
+          </div>
+          <div class="flex">
+            <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+            </svg></h1>
+            <h1 class="text-green-600 text-xl font-semibold">80%</h1>
+          </div>
+        </div>
+
+        
 
   
 
-  <div class="container mx-auto m-8 overflow-auto relative no-scrollbar scroll-smooth" id="journal-scroll">
-
-    <!-- top nav start -->
-
- 
-
-    <!-- top nav end  -->
-    <!-- Banner Start -->
-    <div class="bg-white p-8 rounded-xl">
-      <div class="m-auto space-y-6">
-        <div class="flex gap-4 bg-green-100 p-4 rounded-md">
-          <div class="w-max">
-            <div
-              class="h-10 w-10 flex rounded-full bg-gradient-to-b from-green-100 to-green-300 text-white"
-            >
-              <img src="{% static 'equipment/avatar.png' %}" alt="" />
-            </div>
-          </div>
-          <div class="space-y-1 text-sm">
-            <h6 class="font-medium text-green-900">Welcome, Carl!</h6>
-            <p class="text-green-700 leading-tight">
-              Let's start the day right
-            </p>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <!-- Banner End -->
+        <div class="mt-5 min-w-full">
+          <h1 class="font-semibold text-xl text-gray-900">Recent Activity</h1>
+        </div>
 
-    <!-- Analytics Start -->
-    <!-- Down Button -->
-    <div class="static">
-      <a href="#transactions">
-        <img
-          src="{% static 'equipment/down_button.png' %}"
-          class="hover:animate-bounce w-12 h-12 cursor-pointer fixed bottom-0 right-0"
-          alt=""
-        />
-      </a>
-    </div>
-    <div class="mb-2">
+      <!-- End Cards -->
+      <div class="flex">
+      <!-- Table -->
+      <table class="min-w-full mt-5 shadow-md rounded-lg bg-white text-left">
+        <thead class="bg-green-800">
+          <tr class="border border-gray-200">
+            <th class="p-4 text-white font-thin">Asset Tag</th>
+            <th class="p-4 text-white font-thin">Action</th>
+            <th class="p-4 text-white font-thin">Date</th>
+            <th class="p-4 text-white font-thin">Issued To</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-300">
+          <tr>
+            <td class="p-4">SHAP-10</td>
+            <td class="p-4">Checked Out</td>
+            <td class="p-4">February 18, 2022</td>
+            <td class="p-4">Employee</td>
+          </tr>
+          <tr>
+            <td class="p-4">SHAP-10</td>
+            <td class="p-4">Checked Out</td>
+            <td class="p-4">February 18, 2022</td>
+            <td class="p-4">Employee</td>
+          </tr>
+          <tr>
+            <td class="p-4">SHAP-10</td>
+            <td class="p-4">Checked Out</td>
+            <td class="p-4">February 18, 2022</td>
+            <td class="p-4">Employee</td>
+          </tr>
+
+          <tr>
+            <td class="p-4">SHAP-10</td>
+            <td class="p-4">Checked Out</td>
+            <td class="p-4">February 18, 2022</td>
+            <td class="p-4">Employee</td>
+          </tr>
+
+          <tr>
+            <td class="p-4">SHAP-10</td>
+            <td class="p-4">Checked Out</td>
+            <td class="p-4">February 18, 2022</td>
+            <td class="p-4">Employee</td>
+          </tr>
+        </tbody>
+      </table>
       
-      <!-- Code block starts -->
-      <dh-component>
-        <div class="container flex justify-center mx-auto pt-8">
-          <div>
-            <h1
-              class="xl:text-4xl text-3xl text-center text-green-800 font-extrabold"
-            >
-              SHAP ASSETS
-            </h1>
-          </div>
-        </div>
-        <div class="w-full bg-white px-6 pt-6">
-          <div class="container mx-auto">
-            <div
-              role="list"
-              aria-label="SHAP "
-              class="lg:flex md:flex sm:flex items-center xl:justify-between flex-wrap md:justify-around sm:justify-around lg:justify-around"
-            >
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/assets.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p
-                      class="text-gray-800 text-lg font-extrabold text-center mb-"
-                    >
-                      Assets
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Keyboards
-                      </span>
 
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Mouse
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Monitors
-                      </span>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/license.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p class="text-gray-800 text-lg font-extrabold text-center">
-                      Licenses
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Windows10Pro
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Office2019
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Office2016
-                      </span>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/deployed.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p class="text-gray-800 text-lg font-extrabold text-center">
-                      Deployed
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        1st Floor
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        2nd Floor
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        3rd Floor
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        4th Floor
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        5th Floor
-                      </span>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/users.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p class="text-gray-800 text-lg font-extrabold text-center">
-                      Users
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Teaching
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Non-Teaching
-                      </span>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/trash.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p class="text-gray-800 text-lg font-extrabold text-center">
-                      Disposed Equipment
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Sold
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        Junk
-                      </span>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute -mt-20 w-full flex justify-center">
-                    <div class="h-32 w-32">
-                      <img
-                        src="{% static 'equipment/ap.png' %}"
-                        alt="Assets"
-                        role="img"
-                        class="rounded-full object-cover h-full w-full shadow-md"
-                      />
-                    </div>
-                  </div>
-                  <div class="px-6 mt-16">
-                    <h1 class="font-bold text-3xl text-center mb-1">
-                      {{ total_equipment }}
-                    </h1>
-                    <p class="text-gray-800 text-lg font-extrabold text-center">
-                      Unifi AP
-                    </p>
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        In use
-                      </span>
-
-                      <span
-                        class="inline-flex px-2 text-sm mb-5 font-semibold leading-5 cursor-pointer text-green-800 bg-green-100 rounded-full focus:text-green-900 hover:bg-yellow-100 focus:bg-green-200 focus:outline-none focus:shadow-outline"
-                      >
-                        On Hand
-                      </span>
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </dh-component>
-      <!-- Code block ends -->
-      <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
-    </div>
-
-    <!-- Chart End -->
-    <!-- Analytics End -->
-
-    <!-- Latest Transactions -->
-    <div id="transactions">
-      <div class="bg-white shadow-lg rounded-lg p-4 sm:p-6 xl:p-8">
-        <div class="mb-4 flex items-center justify-between">
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2">
-              Latest Transactions
-            </h3>
-            <span class="text-base font-normal text-gray-500"
-              >This is a list of latest transactions</span
-            >
-          </div>
-          <div class="flex-shrink-0">
-            <a
-              href="#"
-              class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
-              >View all</a
-            >
-          </div>
-        </div>
-        <div class="flex flex-col mt-8">
-          <div class="overflow-x-auto rounded-lg">
-            <div class="align-middle inline-block min-w-full">
-              <div class="shadow overflow-hidden sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                  <thead class="bg-green-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Transaction
-                      </th>
-                      <th
-                        scope="col"
-                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Date & Time
-                      </th>
-                      <th
-                        scope="col"
-                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Issuer
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="bg-white">
-                    <tr>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr class="bg-green-50">
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900 rounded-lg rounded-left"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr class="bg-green-50">
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900 rounded-lg rounded-left"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr class="bg-green-50">
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900 rounded-lg rounded-left"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                    <tr>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-900"
-                      >
-                        Added new equipment
-                        <span class="font-semibold">Rapoo Keyboard(KB-10)</span>
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-normal text-green-500"
-                      >
-                        Feb 1, 2022
-                      </td>
-                      <td
-                        class="p-4 whitespace-nowrap text-sm font-semibold text-green-900"
-                      >
-                        Carl
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+  
+      <!-- Table End -->
       </div>
-    </div>
-
-    <!-- End Latest Transactions -->
-
-    <!-- Card boxes -->
-
-    <div
-      class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
-    >
-      <div class="bg-white shadow-lg rounded-lg p-4 sm:p-6 xl:p-8">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <span
-              class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"
-              >2,340</span
-            >
-            <h3 class="text-base font-normal text-gray-500">
-              New equipment this month
-            </h3>
+        </div>
+        <div class="grid m-2 grid-cols-1 lg:grid-cols-4 md:grid-cols-1 gap-5 mt-8 mb-8">
+          <div class="flex flex-col col-span-2 bg-white p-8 h-72 min-w-full rounded shadow-md justify-center items-center">
+            <h1>Image here</h1>
+            <h1>Number Here</h1>
           </div>
-          <div
-            class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold"
-          >
-            14.6%
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
+          <div class="flex flex-col col-span-2 bg-white p-8 h-72 min-w-full rounded shadow-md justify-center items-center"><h1>Image here</h1>
+            <h1>Number Here</h1>
           </div>
         </div>
+    
       </div>
-      <div class="bg-white shadow-lg rounded-lg p-4 sm:p-6 xl:p-8">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <span
-              class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"
-              >5,355</span
-            >
-            <h3 class="text-base font-normal text-gray-500">Licenses issued</h3>
-          </div>
-          <div
-            class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold"
-          >
-            32.9%
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="bg-white shadow-lg rounded-lg p-4 sm:p-6 xl:p-8">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <span
-              class="text-2xl sm:text-3xl leading-none font-bold text-gray-900"
-              >385</span
-            >
-            <h3 class="text-base font-normal text-gray-500">
-              Disposed this week
-            </h3>
-          </div>
-          <div
-            class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold"
-          >
-            -2.7%
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-        </div>
-      </div>
+      <!-- Content End -->
     </div>
-
-    <!-- End card boxes -->
-
-    <!-- Chart Start -->
-    <div class="mb-2">
-      <!-- Code block starts -->
-      <dh-component>
-        <div class="container flex justify-center mx-auto pt-8">
-          <div>
-            <h1
-              class="xl:text-4xl text-3xl text-center text-green-800 font-extrabold"
-            >
-              CHARTS
-            </h1>
-          </div>
-        </div>
-        <div class="w-full bg-white px-10 pt-10">
-          <div class="container mx-auto">
-            <div
-              role="list"
-              aria-label="Behind the scenes People "
-              class="lg:flex md:flex sm:flex items-center xl:justify-between flex-wrap md:justify-around sm:justify-around lg:justify-around"
-            >
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute w-full flex justify-center">
-                    <h1>Onhand vs Deployed</h1>
-                  </div>
-                  <div class="px-6 m-6">
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <canvas id="myChart"></canvas>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute w-full flex justify-center">
-                    <h1>Onhand vs Deployed</h1>
-                  </div>
-                  <div class="px-6 m-6">
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <canvas id="myChart3"></canvas>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                role="listitem"
-                class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5"
-              >
-                <div class="rounded overflow-hidden shadow-md bg-white">
-                  <div class="absolute w-full flex justify-center">
-                    <h1>Onhand vs Deployed</h1>
-                  </div>
-                  <div class="px-6 m-6">
-                    <p
-                      class="text-center text-gray-600 text-base pt-3 font-normal"
-                    >
-                      <!-- Tags -->
-
-                      <canvas id="myChart2"></canvas>
-
-                      <!-- End Tags -->
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </dh-component>
-      <!-- Code block ends -->
-      <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
-    </div>
-    <!-- Charted End -->
   </div>
-</div>
 
-<script>
-  const ctx = document.getElementById("myChart").getContext("2d");
-  const myChart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: ["On hand", "Deployed"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [50, 900],
-          backgroundColor: ["rgba(255, 227, 16)", "rgba(220, 252, 231)"],
-          borderColor: ["rgba(204, 181, 12)", "rgba(22, 101, 52)"],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      aspectRatio: 1,
+</main>
 
-      tooltips: {
-        enabled: false,
-      },
-      legend: {
-        display: false, // <- the important part
-      },
-    },
-  });
-
-  const ctx2 = document.getElementById("myChart2").getContext("2d");
-  const myChart2 = new Chart(ctx2, {
-    type: "pie",
-    data: {
-      labels: ["On hand", "Deployed"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [50, 900],
-          backgroundColor: ["rgba(255, 227, 16)", "rgba(220, 252, 231)"],
-          borderColor: ["rgba(204, 181, 12)", "rgba(22, 101, 52)"],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      aspectRatio: 1,
-
-      tooltips: {
-        enabled: false,
-      },
-      legend: {
-        display: false, // <- the important part
-      },
-    },
-  });
-
-  const ctx3 = document.getElementById("myChart3").getContext("2d");
-  const myChart3 = new Chart(ctx3, {
-    type: "bar",
-    data: {
-      labels: ["On hand", "Deployed"],
-      datasets: [
-        {
-          label: "Equipment",
-          data: [50, 900],
-          backgroundColor: ["rgba(255, 227, 16)", "rgba(220, 252, 231)"],
-          borderColor: ["rgba(204, 181, 12)", "rgba(22, 101, 52)"],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      aspectRatio: 1,
-
-      tooltips: {
-        enabled: false,
-      },
-      legend: {
-        display: false, // <- the important part
-      },
-    },
-  });
-</script>
 
 {% endblock content %}

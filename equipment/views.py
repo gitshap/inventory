@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from markupsafe import re
-from equipment.models import Equipment, Licenses, Staff
+from equipment.models import Equipment, License, Staff
 from django.contrib.auth.decorators import permission_required
 import csv
 from django.contrib.auth import authenticate, login
@@ -12,10 +12,15 @@ def home_view(request):
     template_name = 'home.html'
 
     total_equipment = Equipment.objects.all().count()
+    total_licenses = License.objects.all().count()
 
     # TODO: Create recent view
+
+
+    
     context = {
         'total_equipment': total_equipment,
+        'total_license': total_licenses,
     }
 
     return render(request, template_name, context=context)
@@ -60,7 +65,7 @@ def login_view(request):
 
 
 def licenses_view(request):
-    licenses = Licenses.objects.all()
+    licenses = License.objects.all()
     template_name = 'all_details/all_licenses.html'
     context = {
         'licenses': licenses

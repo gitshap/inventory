@@ -17,7 +17,6 @@ def create_license(request):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            print("Reaches here")
             return redirect(home_view)
         else:
             return HttpResponse("Wrong move")
@@ -28,7 +27,6 @@ def create_license(request):
     return render(request, template_name, context=context)
             
 # assign/updating a license to a user
-
 @transaction.atomic
 def update_license(request, pk):
     specific_license = License.objects.get(id=pk)
@@ -38,7 +36,6 @@ def update_license(request, pk):
             instance = form.save(commit=False)
             instance.is_assigned = True
             instance.save()
-            print("Reaches here")
             return redirect(home_view)
         else:
             return HttpResponse("Wrong move")
@@ -55,6 +52,6 @@ def update_license(request, pk):
 
 
 
-# delete license
+# delete/unassigning license
 
 

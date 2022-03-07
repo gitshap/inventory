@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex flex-col justify-center items-center min-h-screen">
+
+    <h1>Consumable</h1>
+    <div> {{ consumable }}</div>
+
+
+ <form method="post">
+
+     {% csrf_token %}
+    <div class="flex flex-col">
+        {{ form.name.as_hidden}}
+        <hr>
+        <h1>Select a User</h1>
+        <select name="staff" id="staff">
+          {% for staff in staffs %}
+            <option value="{{staff.id}}">{{staff.name}}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="quantity">Quantity</label>
+        <input type="text" name="quantity">
+  
+      </div>
+      <input type="submit" value="Submit">
+ </form>
+</div>
+</div>
+
+
+
+{% endblock content %}

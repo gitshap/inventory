@@ -32,6 +32,7 @@ class Component(models.Model):
     owner = models.ForeignKey(Staff, on_delete=models.CASCADE, default=1)
 
 
+
     def check_if_deployed(self):
         shap = Staff.objects.get(id=1)
         # 1 = SHAP/Default
@@ -122,9 +123,10 @@ class License(models.Model):
 
 class Consumable(models.Model):
     name = models.CharField(max_length=255)
-    number_of_consumables = models.CharField(max_length=100)
     owner = models.ForeignKey(Staff, on_delete=models.CASCADE, default=1)
     quantity = models.IntegerField(default=0)
+    is_assigned = models.BooleanField(default=False)
+
 
     def check_if_deployed(self):
         shap = Staff.objects.get(id=1)
@@ -133,11 +135,13 @@ class Consumable(models.Model):
             return False
         else:
             return True
+
+            
     def count_deployed(self):
         shap = Staff.objects.get(id=1)
         return Consumable.objects.filter(owner=shap).count()
 
     def __str__(self):
-        return f'{self.name} -- {self.number_of_consumables} items'
+        return f'{self.name}/{self.quantity} items'
 
 

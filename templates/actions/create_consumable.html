@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex flex-col justify-center items-center min-h-screen space-y-8">
+
+    <h1 class="text-5xl text-green-700 underline">Create a Consumable</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {% comment %} Name of Consumable {% endcomment %}
+        <div>
+            <div class="text-2xl">
+                {{ form.name.label}}
+            </div>
+            <div class="focus:outline-none text-2xl border-2 p-2 border-green-600 rounded">
+                {{ form.name}}
+            </div>
+        </div>
+
+        {% comment %} Quantity of Consumable {% endcomment %}
+        <div class="mb-3">
+            <div class="text-2xl">
+                {{ form.quantity.label}}
+            </div>
+            <div class="focus:outline-none text-2xl border-2 p-2 border-green-600 rounded ">
+                {{ form.quantity}}
+            </div>
+        </div>
+
+  
+
+        <div class="bg-green-100 rounded p-2 shadow-md cursor-pointer text-center hover:bg-green-200">
+            <input class="font-semibold cursor-pointer" type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

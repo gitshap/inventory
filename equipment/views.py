@@ -96,7 +96,7 @@ def list_equipments(request):
 
 def list_users(request):
     staffs = Staff.objects.all()
-    template_name = 'all_details/all_users.html'
+    template_name = 'staff/load_staff.html'
     context = {
         'staffs': staffs
     }
@@ -117,7 +117,7 @@ def create_consumable(request):
             instance.owner = get_shap_instance
             instance.save()
             print("huh")
-            return redirect(home_view)
+            return redirect(view_consumable)
     context = {
         'form': form
     }
@@ -156,7 +156,7 @@ def update_consumable(request, id):
             instance = form.save(commit=False)
             instance.save()
             print("huh")
-            return redirect(home_view)
+            return redirect(view_consumable)
     context = {
         'form': form
     }

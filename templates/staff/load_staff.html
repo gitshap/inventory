@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="grid grid-cols-3 gap-2">
+            {% for staff in staffs %}
+            <a href="{% url 'staff_profile' staff.id %}" class="flex flex-col bg-green-900 text-white items-center shadow-md w-full rounded p-8">
+                
+                <div>
+                    {{staff.name}}
+                </div>
+                <div>
+                    {{staff.email}}
+                </div>
+            </a>
+            {% endfor %}
+          </div>
+    </div>
+
+{% endblock content %}

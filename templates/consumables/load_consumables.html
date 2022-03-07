@@ -190,7 +190,7 @@
    
       <div class="flex flex-col flex-1 bg-gray-50 overflow-y-auto px-8 pt-6" id="journal-scroll">
 
-        <h1 class="text-3xl font-bold text-green-700">Consumables</h1>
+        <h1 class="text-5xl font-bold text-green-800 text-left">CONSUMABLES</h1>
 
         <div class="grid m-2 grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-5">
         <div
@@ -250,7 +250,7 @@
               <td class="p-4 flex justify-center">
                 <div class="flex space-x-3 flex justify-start items-center">
                   <a href="{% url 'checkout_consumable' consumable.id %}"
-                    class="bg-green-900 text-yellow-300 p-2 rounded font-semibold">Checkout</a>
+                    class="bg-green-900 text-yellow-300 p-2 rounded font-semibold hover:bg-green-700">Checkout</a>
                   <a href="{% url 'update_consumable' consumable.id %}"><svg xmlns="http://www.w3.org/2000/svg"
                       class="h-8 w-8 text-green-900 transform transition-all hover:scale-125 hover:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                       stroke-width="2">

@@ -108,14 +108,16 @@ def list_users(request):
 # Consumables
 def create_consumable(request):
     template_name = 'actions/create_consumable.html'
+    get_shap_instance = Staff.objects.get(id=1)
     form = CreateConsumableForm(request.POST or None)
     if request.method == 'POST':
+        form = CreateConsumableForm(request.POST or None)
         if form.is_valid():
-            form = CreateConsumableForm(request.POST or None)
-            form.save()
+            instance = form.save(commit=False)
+            instance.owner = get_shap_instance
+            instance.save()
             print("huh")
             return redirect(home_view)
-    print("he")
     context = {
         'form': form
     }
@@ -125,12 +127,52 @@ def create_consumable(request):
 def view_consumable(request):
     template_name = 'consumables/load_consumables.html'
     shap_owner = Staff.objects.get(id=1)
+    total_consumable_stock = Consumable.objects.filter(owner=shap_owner)
+    total_consumable_deployed = Consumable.objects.filter(~Q(owner=shap_owner))
+    total_consumable = 0
+    total_deployed = 0
+    for stock in total_consumable_stock:
+        total_consumable += stock.quantity
+    
+    for stock in total_consumable_deployed:
+        total_deployed += stock.quantity
+
     consumables = Consumable.objects.filter(owner=shap_owner)
 
     context = {
-        'consumables': consumables
+        'consumables': consumables,
+        'total_consumable': total_consumable,
+        'total_deployed': total_deployed
     }
     return render(request, template_name, context=context)
+
+def update_consumable(request, id):
+    template_name = 'consumables/update_consumable.html'
+    consumable = Consumable.objects.get(id=id)
+    form = CreateConsumableForm(request.POST or None, instance=consumable)
+    if request.method == 'POST':
+        form = CreateConsumableForm(request.POST or None, instance=consumable)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            print("huh")
+            return redirect(home_view)
+    context = {
+        'form': form
+    }
+    return render(request, template_name, context=context)
+
+
+
+def delete_consumable(request, id):
+    template_name = 'consumables/delete_consumable.html'
+    consumable = Consumable.objects.get(id=id)
+    consumable.delete()
+    context = {
+        'consumable': consumable
+    }
+    return render(request, template_name, context=context)
+
 
 
 
@@ -155,12 +197,9 @@ def checkout_consumable(request, id):
                 Consumable.objects.create(id=random_id + random_id, name=instance.name, quantity=1, owner=get_owner_instance)
             instance.quantity = instance.quantity - int(get_number_of_quantity)
             instance.save()
-            print('Reaches if')
-            print(request.POST.get('staff'))
-            return redirect(home_view)
+  
+            return redirect(view_consumable)
         else:
-            print('Reaches else')
-            print(request.POST.get('staff'))
             return redirect(checkout_consumable, 1)
 
     context = {

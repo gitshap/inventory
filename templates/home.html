@@ -45,7 +45,7 @@
             </svg>
             <h1 class="ml-2 font-normal text-lg font-sans">Accessories</h1>
           </a>
-          <a href="#"
+          <a href="{% url 'view_consumable' %}"
             class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
               xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
@@ -141,9 +141,7 @@
 
 
           <div class="flex justify-end space-x-6 mr-4">
-            <button class="flex transform transition duration-100 hover:scale-105 hover:font-semibold  font-normal text-md font-sanstext-green-900 bg-yellow-300 rounded px-5 h-6" x-on:click="console.log('Modal Here')">
-              Create New
-            </button>
+    
             <a href="#" class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -180,12 +178,9 @@
                 <h1 class="font-bold text-sm text-center">ASSETS</h1>
               </div>
               <div class="flex">
-                <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                  </svg></h1>
-                <h1 class="text-green-600 text-xl font-semibold">30%</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
             </div>
 
@@ -205,12 +200,9 @@
                 <h1 class="font-bold text-sm text-center">LICENSES</h1>
               </div>
               <div class="flex">
-                <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                  </svg></h1>
-                <h1 class="text-green-600 text-xl font-semibold">16%</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
             </div>
 
@@ -230,12 +222,9 @@
                 <h1 class="font-bold text-sm text-center">CONSUMABLES</h1>
               </div>
               <div class="flex">
-                <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                  </svg></h1>
-                <h1 class="text-red-600 text-xl font-semibold">60%</h1>
+                  <a href="{% url 'create_consumable' %}" class="transform transition-all hover:scale-125"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg></a>
               </div>
             </div>
 
@@ -253,12 +242,9 @@
                 <h1 class="font-bold text-sm text-center">COMPONENTS</h1>
               </div>
               <div class="flex">
-                <h1><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                      d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                  </svg></h1>
-                <h1 class="text-green-600 text-xl font-semibold">80%</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
             </div>
 

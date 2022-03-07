@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex justify-center items-center min-h-screen">
+    {{ consumable.name }} is deleted.
+    <a href="{% url 'home_view' %}">Go back home</a>
+</div>
+
+{% endblock content %}

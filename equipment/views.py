@@ -10,6 +10,9 @@ from .forms import CheckoutForm, CreateConsumableForm
 from django.db.models import Q
 from django.db import IntegrityError, transaction
 from random import randint
+from django.contrib import messages
+from django.contrib.postgres.search import SearchHeadline, SearchQuery
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def home_view(request):
@@ -116,8 +119,12 @@ def create_consumable(request):
             instance = form.save(commit=False)
             instance.owner = get_shap_instance
             instance.save()
+            messages.add_message(request, messages.SUCCESS, f'Consumable {instance.name} is created')
             print("huh")
             return redirect(view_consumable)
+        else:
+            messages.add_message(request, messages.ERROR, f'Quantity must not be negative')
+
     context = {
         'form': form
     }
@@ -155,8 +162,10 @@ def update_consumable(request, id):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
-            print("huh")
+            messages.add_message(request, messages.INFO, f'Consumable {instance.name} is updated')
             return redirect(view_consumable)
+        else:
+            messages.add_message(request, messages.ERROR, f'Consumable {instance.name} is not updated')
     context = {
         'form': form
     }
@@ -181,26 +190,36 @@ def delete_consumable(request, id):
 def checkout_consumable(request, id):
     template_name = 'consumables/checkout.html'
     random_id = randint(545, 500000005)
-    staffs = Staff.objects.all()
+    get_shap = Staff.objects.get(id=1)
+    # removing shap from the list
+    staffs = Staff.objects.filter(~Q(id=get_shap.id))
     consumable = Consumable.objects.get(id=id)
+
     form = CheckoutForm(request.POST or None, instance=consumable)
-    if request.method == 'POST':
-        form = CheckoutForm(request.POST or None, instance=consumable)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            get_owner_from_site = request.POST.get('staff')
-            get_number_of_quantity = request.POST.get('quantity')
-            get_owner_instance = Staff.objects.get(id=get_owner_from_site)
-            try:
-                Consumable.objects.create(id=random_id, name=instance.name, quantity=get_number_of_quantity, owner=get_owner_instance)
-            except IntegrityError:
-                Consumable.objects.create(id=random_id + random_id, name=instance.name, quantity=1, owner=get_owner_instance)
-            instance.quantity = instance.quantity - int(get_number_of_quantity)
-            instance.save()
-  
-            return redirect(view_consumable)
-        else:
-            return redirect(checkout_consumable, 1)
+    original_count = consumable.quantity
+    try:
+        if request.method == 'POST':
+            if form.is_valid():
+                form = CheckoutForm(request.POST or None, instance=consumable)
+                instance = form.save(commit=False)
+                get_owner_from_site = request.POST.get('staff')
+                get_number_of_quantity = request.POST.get('quantity')
+                get_owner_instance = Staff.objects.get(name=get_owner_from_site)
+                print(get_owner_instance)
+                try:
+                    Consumable.objects.create(id=random_id, name=instance.name, quantity=get_number_of_quantity, owner=get_owner_instance)
+                except IntegrityError:
+                    Consumable.objects.create(id=random_id + random_id, name=instance.name, quantity=get_number_of_quantity, owner=get_owner_instance)
+                instance.quantity = original_count - int(get_number_of_quantity)
+                instance.save()
+    
+                return redirect(view_consumable)
+            else:
+                return redirect(view_consumable)
+    except ObjectDoesNotExist:
+        messages.add_message(request, messages.ERROR, f'User does not exist. Please try again')
+        return redirect(view_consumable)
+
 
     context = {
         'form': form,
@@ -208,6 +227,7 @@ def checkout_consumable(request, id):
         'consumable': consumable
     }
     return render(request, template_name, context=context)
+
 
 
 # Staff
@@ -223,3 +243,31 @@ def staff_profile(request, id):
     }
     return render(request, template_name,  context=context)
 
+
+def search_user(request):
+    template_name = 'staff/search_staff.html'
+    result_html = 'staff.results_staff.html'
+    results = ''
+    if request.method == 'POST':
+        query = request.POST.get('search', '1')
+        searched_query = SearchQuery(query)
+
+        search_headline = SearchHeadline("name", searched_query,
+        start_sel='<b>',
+        stop_sel='</b>')
+
+        results = Staff.objects.annotate(
+            headline=search_headline,
+        ).filter(name__search=searched_query)
+
+       
+        context = {
+            'results': results,
+        }
+
+        return render( request, result_html, context=context)
+    else:
+        context = {
+            'result': '1'
+        }
+        return render(request, template_name, context=context)

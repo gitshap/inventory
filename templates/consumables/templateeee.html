@@ -188,54 +188,8 @@
             </nav>
             {% comment %} End Navbar {% endcomment %}
             <div class="flex flex-col flex-1 bg-gray-50 overflow-y-auto px-8 pt-6" id="journal-scroll">
-                <a href="{{ request.META.HTTP_REFERER }}" class="text-green-900 font-semibold ">
-                    <div
-                        class="flex items-center justify-center p-2 bg-yellow-300 shadow-md hover:bg-yellow-200 w-28 rounded-lg space-x-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-900" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-                        </svg>
-                        Go back
-                    </div>
-                </a>
-                <div class="flex flex-col justify-center items-center bg-white shadow-md p-8 mx-auto space-y-7">
-
-                    <h1 class="text-5xl text-green-800 font-bold">Edit Consumable</h1>
-                    <form method="post">
-                        {% csrf_token %}
                 
-                        {% comment %} Name of Consumable {% endcomment %}
-                        <div>
-                              <div class="text-2xl text-green-800 font-semibold">
-                                {{ form.name.label}}
-                            </div>
-                            <div class="focus:outline-none text-2xl border-2 p-2 border-yellow-300 rounded">
-                                {{ form.name}}
-                            </div>
-                        </div>
-                
-                        {% comment %} Quantity of Consumable {% endcomment %}
-                        <div class="mb-3">
-                              <div class="text-2xl text-green-800 font-semibold">
-                                {{ form.quantity.label}}
-                            </div>
-                            <div class="focus:outline-none text-2xl border-2 p-2 border-yellow-300 rounded ">
-                                {{ form.quantity}}
-                            </div>
-                        </div>
-                
-                  
-                
-                        <div class="rounded cursor-pointer text-center">
-                            <input
-                            class="w-full bg-green-900 rounded p-2 shadow-md text-center hover:bg-green-800 font-semibold cursor-pointer text-yellow-300 text-2xl"
-
-                             type="submit" value="Submit">
-                        </div>
-                    </form>
-                </div>
-                
-
+                {% comment %} Content Here {% endcomment %}
             </div>
         </div>
 
@@ -247,6 +201,5 @@
 
 
 {% endblock content %}
-
 
 

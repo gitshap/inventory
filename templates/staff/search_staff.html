@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %} {% load static %}
+
+
+
+    <div class="">
+        <h3>Search a user</h3>
+        <form onkeydown="return event.key != 'Enter';" method="POST">
+            {% csrf_token %}
+            <input type="search" name="search" id="search" placeholder="Begin Typing To Search Users..."
+                autocomplete="off" hx-post="{% url 'search_user' %}" hx-trigger="keyup changed delay:500ms, search"
+                hx-target="#search-results" hx-indicator="#spinner">
+ 
+        </form>
+
+    </div>
+
+
+
+<div class="items-center justify-center">
+    {% include 'staff/results_staff.html' %}
+</div>
+
+{% endblock content %}

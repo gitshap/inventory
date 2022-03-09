@@ -15,15 +15,16 @@ class CreateConsumableForm(ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(CreateConsumableForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class': 'focus:outline-none'})
-        self.fields['quantity'].widget.attrs.update({'class': 'focus:outline-none'})
+        self.fields['name'].widget.attrs.update({'class': 'focus:outline-none w-96'})
+        self.fields['quantity'].widget.attrs.update({'class': 'focus:outline-none w-96'})
 
 
 class CheckoutForm(ModelForm):
     class Meta:
         model = Consumable
-        fields = ('name', )
+        fields = ('name', 'quantity', )
     
     def __init__(self, *args, **kwargs):
         super(CheckoutForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'type': 'hidden'})
+        self.fields['quantity'].widget.attrs.update({'class': 'focus:outline-none w-96'})

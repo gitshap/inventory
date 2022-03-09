@@ -1,6 +1,6 @@
 from django.urls import path
 from equipment.views import (
-     checkout_consumable, create_consumable, delete_consumable, equipment_view, csv_to_import, list_users ,home_view, login_view, licenses_view, list_equipments, staff_profile, update_consumable, view_consumable,
+     checkout_consumable, create_consumable, delete_consumable, equipment_view, csv_to_import, list_users ,home_view, login_view, licenses_view, list_equipments, search_user, staff_profile, update_consumable, view_consumable,
      
 )
 
@@ -34,6 +34,7 @@ urlpatterns = [
 
     # staff views
     path('staff/profile/<int:id>/', staff_profile, name='staff_profile'),
+    path('staff/search_user/', search_user, name='search_user')
     
     
 ]

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %} {% load static %}
+
+
+
+<div class="" id="search-results">
+
+    {% for user in results %}
+    <div id="spinner" class="htmx-indicator">
+        <h1>Searching....</h1>
+    </div>
+        <div class="">
+            <a href="{{ user.id }}">{{ user.headline|safe }}</a>
+        </div>
+        {% endfor %}
+
+</div>
+{% endblock content %}

@@ -1,39 +1,240 @@
 {% extends 'base.html' %}
 
-{% block content %}
 
-<div class="flex flex-col justify-center items-center min-h-screen space-y-8">
+{% block content %} {% load static %}
 
-    <h1 class="text-5xl text-green-700 underline">Create a Consumable</h1>
-    <form method="post">
-        {% csrf_token %}
 
-        {% comment %} Name of Consumable {% endcomment %}
-        <div>
-            <div class="text-2xl">
-                {{ form.name.label}}
+
+<main class="flex flex-col h-screen" x-data="{ isShowing: true}" id="journal-scroll">
+
+
+    <div class="flex flex-1 overflow-hidden">
+
+        {% comment %} SideBar {% endcomment %}
+
+        <div class="lg:flex bg-white w-56 transition-all duration-300 ease-in-out" :class="{ '-ml-56': !isShowing}">
+            <div class="flex flex-col">
+
+                <div class="flex justify-center items-center">
+                    <h2 class="m-2 p-2"><img src="{% static 'equipment/shap-logo.png' %}" alt="shap-logo"
+                            class="w-16 h-16 object-contain">
+                    </h2>
+                    <h2 class="font-semibold text-green-700"> SHAP ASSET Management</h2>
+                </div>
+
+
+                <div class="flex flex-col space-y-1 rounded-2xl">
+                    <a href="{% url 'home_view' %}"
+                        class="flex hover:text-white  m-2 p-2 mb-0 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Dashboard</h1>
+                    </a>
+
+
+
+                    <a href="#"
+                        class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Assets</h1>
+                    </a>
+                    <a href="#"
+                        class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Licenses</h1>
+                    </a>
+                    <a href="{% url 'view_consumable' %}"
+                        class="flex text-white  m-2 p-2  bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+                        </svg>
+                        <h1 class="ml-2 font-bold text-lg font-sans">Consumables</h1>
+                    </a>
+                    <a href="#"
+                        class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Components</h1>
+                    </a>
+                    <a href="#"
+                        class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Users</h1>
+                    </a>
+                    <!-- Dropdown -->
+                    <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                        <button @click="open = !open"
+                            class="flex hover:text-white m-2 p-2 mb-0 mt-0 text-gray-800 w-52 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <div class="flex">
+                                <h1 class="ml-2 font-normal text-lg font-sans">Rooms</h1>
+
+                                <svg fill="currentColor" viewBox="0 0 20 20"
+                                    :class="{'rotate-180': open, 'rotate-0': !open}"
+                                    class="flex justify-end w-6 h-6 transition-transform duration-200 transform">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-95"
+                            class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+                            <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
+                                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-white focus:text-gray-900 hover:bg-green-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                                    href="#">Science Laboratory</a>
+                                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-white focus:text-gray-900 hover:bg-green-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                                    href="#">HLP</a>
+                                <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-white focus:text-gray-900 hover:bg-green-900 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                                    href="#">Gym</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dropdown end -->
+
+                    <a href="#"
+                        class="flex hover:text-white  m-2 p-2 text-gray-800 hover:bg-green-900 rounded-md  text-md transition duration-100 ease-in">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h1 class="ml-2 font-normal text-lg font-sans">Help</h1>
+                    </a>
+                </div>
             </div>
-            <div class="focus:outline-none text-2xl border-2 p-2 border-green-600 rounded">
-                {{ form.name}}
+
+        </div>
+
+        {% comment %} End Sidebar {% endcomment %}
+
+
+        {% comment %} Navbar {% endcomment %}
+        <div class="flex flex-1 flex-col">
+            <nav>
+                <div class="flex justify-between bg-green-800 h-14 p-4">
+
+                    <div class="flex">
+                        <div>
+                            <button @click="isShowing = !isShowing">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-white transition-all duration-500 origin-center hover:rotate-45"
+                                    :class="{'rotate-90': isShowing, 'rotate-45': !isShowing" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+
+                        </div>
+
+                        <a href="#" class="flex">
+
+                            <h2 class="ml-2 text-white">Search</h2>
+                        </a>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white ml-4" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+
+                    <div class="flex justify-end space-x-6 mr-4">
+
+                        <a href="#" class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg></a>
+                        <a href="#" class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg></a>
+                    </div>
+                </div>
+            </nav>
+            {% comment %} End Navbar {% endcomment %}
+            <div class="flex flex-col flex-1 bg-gray-50 overflow-y-auto px-8 pt-6" id="journal-scroll">
+                <a href="{{ request.META.HTTP_REFERER }}" class="text-green-900 font-semibold ">
+                    <div
+                        class="flex items-center justify-center p-2 bg-yellow-300 shadow-md hover:bg-yellow-200 w-28 rounded-lg space-x-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-900" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                        </svg>
+                        Go back
+                    </div>
+                </a>
+                <div class="flex flex-col justify-center items-center space-y-8 bg-white mx-auto p-8 rounded shadow-md">
+                    <h1 class="text-5xl text-green-800 font-bold">Create a Consumable</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% comment %} Name of Consumable {% endcomment %}
+                        <div>
+                            <div class="text-2xl text-green-800 font-semibold">
+                                {{ form.name.label}}
+                            </div>
+                            <div class="focus:outline-none text-2xl border-2 p-3 border-yellow-300 rounded">
+                                {{ form.name}}
+                            </div>
+                        </div>
+                        {% comment %} Quantity of Consumable {% endcomment %}
+                        <div class="mb-3">
+                            <div class="text-2xl text-green-800 font-semibold">
+                                {{ form.quantity.label}}
+                            </div>
+                            <div class="focus:outline-none text-2xl border-2 p-3 border-yellow-300 rounded ">
+                                {{ form.quantity}}
+                            </div>
+                        </div>
+                        <div class="">
+                            <input
+                                class="w-full bg-green-900 rounded p-2 shadow-md text-center hover:bg-green-800 font-semibold cursor-pointer text-yellow-300 text-2xl"
+                                type="submit" value="Submit">
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
 
-        {% comment %} Quantity of Consumable {% endcomment %}
-        <div class="mb-3">
-            <div class="text-2xl">
-                {{ form.quantity.label}}
-            </div>
-            <div class="focus:outline-none text-2xl border-2 p-2 border-green-600 rounded ">
-                {{ form.quantity}}
-            </div>
-        </div>
+    </div>
 
-  
-
-        <div class="">
-            <input class="w-full bg-green-100 rounded p-2 shadow-md text-center hover:bg-green-200 font-semibold cursor-pointer" type="submit" value="Submit">
-        </div>
-    </form>
-</div>
+</main>
 
 {% endblock content %}

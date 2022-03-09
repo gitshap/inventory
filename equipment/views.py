@@ -209,6 +209,7 @@ def checkout_consumable(request, id):
                 try:
                     Consumable.objects.create(id=random_id, name=instance.name, quantity=get_number_of_quantity, owner=get_owner_instance)
                 except IntegrityError:
+                    # just to make sure the random number is not duplicated
                     Consumable.objects.create(id=random_id + random_id, name=instance.name, quantity=get_number_of_quantity, owner=get_owner_instance)
                 instance.quantity = original_count - int(get_number_of_quantity)
                 instance.save()
@@ -234,8 +235,8 @@ def checkout_consumable(request, id):
 def staff_profile(request, id):
     template_name = 'staff/profile.html'
     staff = Staff.objects.get(id=id)
-    assigned_consumables = Consumable.objects.filter(owner=staff)
-    assigned_equipment = Equipment.objects.filter(owner=staff)
+    assigned_consumables = Consumable.objects.filter(owner=staff).select_related('owner')
+    assigned_equipment = Equipment.objects.filter(owner=staff).select_related('owner')
     context = {
         'staff': staff,
         'assigned_consumables': assigned_consumables,

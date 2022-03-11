@@ -308,18 +308,18 @@ def search_consumable(request):
     total_consumable_stock = Consumable.objects.filter(owner=shap_owner).select_related('owner')
     results = total_consumable_stock
     default_view = total_consumable_stock
-    print(results)
 
     if request.method == 'POST':
         query = request.POST.get('search', total_consumable_stock)
         searched_query = SearchQuery(query)
-
+        print(searched_query)
         search_headline = SearchHeadline("name", searched_query,
         start_sel='<b>',
         stop_sel='</b>')
         results = Consumable.objects.annotate(
             headline=search_headline,
         ).filter(name__search=searched_query)
+        print(results)
         context = {
             'results': results,
             'default_view': default_view

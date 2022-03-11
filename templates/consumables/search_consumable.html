@@ -5,20 +5,17 @@
 
 
     <div class="">
-        <form onkeydown="noEnter()" method="POST">
+        <form method="POST">
             {% csrf_token %}
+            <button type="submit" disabled style="display: none" aria-hidden="true"></button>
             <input type="search" name="search" id="search" placeholder="Begin Typing To Search Users..."
                 autocomplete="off" hx-post="{% url 'search_consumable' %}" hx-trigger="keyup changed delay:500ms, search"
-                hx-target="#search-results" hx-indicator="#spinner">
+                hx-target="#search-results" hx-indicator="#spinner" class="focus:outline-none placeholder-green-600 border border-yellow-300">
  
         </form>
 
     </div>
-<script>
-    function noEnter(){
-        return event.key != 'Enter';
-    }
-</script>
+
      
 
 

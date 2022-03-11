@@ -5,8 +5,11 @@
 
 
     <div class="">
-        <form onkeydown="return event.key != 'Enter';"  method="POST">
+        <form  method="POST">
+            
             {% csrf_token %}
+            <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+
             <input type="search" name="search" id="search" placeholder="Begin Typing To Search Users..."
                 autocomplete="off" hx-post="{% url 'search_user' %}" hx-trigger="keyup changed delay:500ms, search"
                 hx-target="#search-results" hx-indicator="#spinner">

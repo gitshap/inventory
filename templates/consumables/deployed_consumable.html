@@ -184,7 +184,6 @@
                     </div>
                 </div>
             </nav>
-            {% comment %} End Navbar {% endcomment %}
             <div class="flex flex-col flex-1 bg-gray-50 overflow-y-auto px-8 pt-6" id="journal-scroll">
                 <a href="{{ request.META.HTTP_REFERER }}" class="text-green-900 font-semibold ">
                     <div
@@ -240,6 +239,7 @@
                         </tbody>
                     
                       </table>
+                      <!-- Start Pagination -->
                       <div>
                         Go to Page
                         <select name="goto_page" id="goto_page" onchange="location = this.value;">
@@ -279,10 +279,8 @@
                                 <a href="?page={{ deployed.paginator.num_pages }}"><h1 class="font-bold">LAST</h1></a>
                             {% endif %}
                         </span>
-
-                     
                     </div>
-                
+                <!-- End Pagination -->
                 </div>
 
             </div>

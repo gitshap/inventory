@@ -135,8 +135,8 @@ def create_consumable(request):
 def view_consumable(request):
     template_name = 'consumables/load_consumables.html'
     shap_owner = Staff.objects.get(id=1)
-    total_consumable_stock = Consumable.objects.filter(owner=shap_owner)
-    total_consumable_deployed = Consumable.objects.filter(~Q(owner=shap_owner))
+    total_consumable_stock = Consumable.objects.filter(owner=shap_owner).select_related('owner')
+    total_consumable_deployed = Consumable.objects.filter(~Q(owner=shap_owner)).select_related('owner')
     total_consumable = 0
     total_deployed = 0
     for stock in total_consumable_stock:
@@ -145,10 +145,13 @@ def view_consumable(request):
     for stock in total_consumable_deployed:
         total_deployed += stock.quantity
 
-    consumables = Consumable.objects.filter(owner=shap_owner)
+    consumables = Consumable.objects.filter(owner=shap_owner).select_related('owner')
+    paginator = Paginator(consumables, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        'consumables': consumables,
+        'consumables': page_obj,
         'total_consumable': total_consumable,
         'total_deployed': total_deployed
     }
@@ -270,7 +273,7 @@ def staff_profile(request, id):
 
 def search_user(request):
     template_name = 'staff/search_staff.html'
-    result_html = 'staff.results_staff.html'
+    result_html = 'staff/results_staff.html'
     results = ''
     if request.method == 'POST':
         query = request.POST.get('search', '1')
@@ -294,4 +297,39 @@ def search_user(request):
         context = {
             'result': '1'
         }
+        return render(request, template_name, context=context)
+
+
+
+def search_consumable(request):
+    template_name = 'consumables/search_consumable.html'
+    result_html = 'consumables/results_consumable.html'
+    shap_owner = Staff.objects.get(id=1)
+    total_consumable_stock = Consumable.objects.filter(owner=shap_owner).select_related('owner')
+    results = total_consumable_stock
+    default_view = total_consumable_stock
+    print(results)
+
+    if request.method == 'POST':
+        query = request.POST.get('search', total_consumable_stock)
+        searched_query = SearchQuery(query)
+
+        search_headline = SearchHeadline("name", searched_query,
+        start_sel='<b>',
+        stop_sel='</b>')
+        results = Consumable.objects.annotate(
+            headline=search_headline,
+        ).filter(name__search=searched_query)
+        context = {
+            'results': results,
+            'default_view': default_view
+        }
+
+        return render(request, result_html, context=context)
+    else:
+        context = {
+            'result': total_consumable_stock,
+            'default_view': default_view
+        }
+
         return render(request, template_name, context=context)

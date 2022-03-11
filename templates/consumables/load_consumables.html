@@ -279,8 +279,8 @@
               <h1 class="font-bold text-sm text-center">Deployed </h1>
             </div>
             <div class="flex">
-              <a href="{% url 'create_consumable' %}" class="hidden transform transition-all hover:scale-125"><svg
-                  xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              <a href="{% url 'view_deployed' %}" class="transform transition-all hover:scale-125"><svg
+                  xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-700" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor" stroke-width="2">
                   <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -294,16 +294,16 @@
         <table class="table-fixed w-full shadow-md rounded-lg bg-white text-left">
           <thead class="bg-green-800">
             <tr class="border border-gray-200">
-              <th class="p-4 text-white font-thin">Name</th>
-              <th class="p-4 text-white font-thin">Quantity</th>
-              <th class="p-4 text-white font-thin flex justify-center">Actions</th>
+              <th class="p-4 text-white font-bold ">Name</th>
+              <th class="p-4 text-white font-bold ">Quantity</th>
+              <th class="p-4 text-white font-bold  flex justify-center">Actions</th>
             </tr>
           </thead>
 
           <tbody class="divide-y-2 divide-gray-500 ">
             {% for consumable in consumables %}
             <tr class="divide-x divide-gray-100 ">
-              <td class="p-4">{{consumable.name}}</td>
+              <td class="p-4"><a href="{% url 'detail_consumable' consumable.id %}" class="text-green-900 bg-yellow-300 p-2 rounded font-bold">{{consumable.name}}</a></td>
               <td class="p-4">{{consumable.quantity}}</td>
 
               <td class="p-4 flex justify-center">

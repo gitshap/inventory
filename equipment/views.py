@@ -13,6 +13,7 @@ from random import randint
 from django.contrib import messages
 from django.contrib.postgres.search import SearchHeadline, SearchQuery
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 
 
 def home_view(request):
@@ -153,6 +154,28 @@ def view_consumable(request):
     }
     return render(request, template_name, context=context)
 
+
+def view_deployed(request):
+    template_name = 'consumables/deployed_consumable.html'
+    shap_owner = Staff.objects.get(id=1)
+    deployed = Consumable.objects.filter(~Q(owner=shap_owner)).select_related('owner')
+    paginator = Paginator(deployed, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'deployed': page_obj
+    }
+    return render(request, template_name, context=context)
+
+
+def detail_consumable(request, id):
+    template_name = 'consumables/detail_consumable.html'
+    get_consumable = Consumable.objects.get(id=id)
+    context = {
+        'consumable': get_consumable,
+    }
+    return render(request, template_name, context=context)
+
 def update_consumable(request, id):
     template_name = 'consumables/update_consumable.html'
     consumable = Consumable.objects.get(id=id)
@@ -180,7 +203,7 @@ def delete_consumable(request, id):
     context = {
         'consumable': consumable
     }
-    return render(request, template_name, context=context)
+    return redirect(view_consumable)
 
 
 

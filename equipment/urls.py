@@ -1,6 +1,6 @@
 from django.urls import path
 from equipment.views import (
-     checkout_consumable, create_consumable, delete_consumable, equipment_view, csv_to_import, list_users ,home_view, login_view, licenses_view, list_equipments, search_user, staff_profile, update_consumable, view_consumable,
+     checkout_consumable, create_consumable, delete_consumable, detail_consumable, equipment_view, csv_to_import, list_users ,home_view, login_view, licenses_view, list_equipments, search_user, staff_profile, update_consumable, view_consumable, view_deployed,
      
 )
 
@@ -27,9 +27,11 @@ urlpatterns = [
     # consumable views
     path('consumable/create_consumable/', create_consumable, name='create_consumable'),
     path('consumable/view_consumable/', view_consumable, name='view_consumable'),
+    path('consumable/deployed/', view_deployed, name='view_deployed'),
     path('consumable/checkout_consumable/<int:id>', checkout_consumable, name='checkout_consumable'),
     path('consumable/update_consumable/<int:id>', update_consumable, name='update_consumable'),
     path('consumable/delete_consumable/<int:id>', delete_consumable, name='delete_consumable'),
+    path('consumable/detail_consumable/<int:id>', detail_consumable, name='detail_consumable'),
 
 
     # staff views

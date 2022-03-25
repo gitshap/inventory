@@ -7,6 +7,7 @@ from equipment.views import (
 
 # license views
 from equipment.licenses import create_license, update_license
+from equipment.equipment_views import create_equipment
 
 urlpatterns = [
     path('', home_view, name='home_view'),
@@ -37,8 +38,11 @@ urlpatterns = [
 
     # staff views
     path('staff/profile/<int:id>/', staff_profile, name='staff_profile'),
-    path('staff/search_user/', search_user, name='search_user')
+    path('staff/search_user/', search_user, name='search_user'),
     
+
+    # Equipment views
+    path('equipment/create_equipment', create_equipment, name='create_equipment'),
     
 ]
 

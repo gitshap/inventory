@@ -1,6 +1,11 @@
+from datetime import datetime
 from decimal import MAX_EMAX
-from django.db import models
+from email.policy import default
+from django.db import IntegrityError, models
+from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ObjectDoesNotExist
 
+from random import randint, random
 
 
 # Staff names, email to be assigned to equipment/license
@@ -25,79 +30,110 @@ class Staff(models.Model):
 
 
 class Component(models.Model):
+
+    class Status(models.TextChoices):
+        WORKING = 'OK', _('Working')
+        TO_BE_REPAIRED = 'TBD', _('To be repaired')
+        DISPOSED = 'DP', _('Disposed')
+
+  
     name_of_component = models.CharField(max_length=255)
-    model_number = models.CharField(max_length=255)
-    quantity = models.IntegerField(default=0)
-    is_disposed = models.BooleanField(default=False)
-    owner = models.ForeignKey(Staff, on_delete=models.CASCADE, default=1)
+    asset_tag = models.CharField(max_length=30, unique=True, default='SHAP', blank=True, null=True)
+    date_purchased = models.DateField(blank=True, default=datetime.now)
+    date_deprecated = models.DateField(blank=True, default=datetime.now)
+    status = models.CharField(max_length=4,
+                choices=Status.choices,
+                default=Status.WORKING)
 
+    in_use = models.BooleanField(default=False)
 
-
-    def check_if_deployed(self):
-        shap = Staff.objects.get(id=1)
-        # 1 = SHAP/Default
-        if self.owner == shap:
-            return False
-        else:
-            return True
-    def count_deployed(self):
-        shap = Staff.objects.get(id=1)
-        return Component.objects.filter(owner=shap).count()
 
     def __str__(self):
-        return f'{self.name_of_component} - {self.quantity} pcs'
+        return f'{self.asset_tag} - {self.name_of_component}'
+
+    def is_in_use(self):
+        if self.in_use == True:
+            return False
+
+    def save(self, *args, **kwargs):
+        random_number = randint(1, 500000)
+        another_number = randint(500000, 999999)
+        
+        try:
+            tag = Component.objects.latest('asset_tag')
+            if Component.objects.get(asset_tag=tag.asset_tag):
+                self.asset_tag = 'SC-' + str(random_number)
+                super(Component, self).save(*args, **kwargs)
+            else:
+                self.asset_tag = 'SC-' + str(random_number)
+                super(Component, self).save(*args, **kwargs)
+                print("There was a constraint")
+        except IntegrityError:
+            self.asset_tag = 'SC-' + str(random_number)
+            print("There was a constraint")
+        except ObjectDoesNotExist:
+            self.asset_tag = 'SC-' + str(another_number)
+            print('New One')
+        super(Component, self).save(*args, **kwargs)
+
 
     
 class Equipment(models.Model):
     """ Equipment Model """
 
-    WORKING = 'WORKING'
-    TO_BE_REPAIRED = 'TO BE REPAIRED'
-    BROKEN = 'BROKEN'
+    class Status(models.TextChoices):
+        WORKING = 'OK', _('Working')
+        TO_BE_REPAIRED = 'TBD', _('To be repaired')
+        DISPOSED = 'DP', _('Disposed')
 
-    STATUS_CHOICES = [
-        (WORKING, 'WORKING'),
-        (TO_BE_REPAIRED, 'TO BE REPAIRED'),
-        (BROKEN, 'BROKEN')
-    ]
+
+    owner = models.ForeignKey(Staff, on_delete=models.CASCADE)
+     
+    asset_tag = models.CharField(max_length=30, unique=True, default='shap', null=True, blank=True)
     name = models.CharField(max_length=255)
-    label = models.CharField(max_length=255, primary_key=True)
-    location = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="uploads/", default="default.png")
-    note = models.TextField(default="Text here")
-    date_created = models.DateField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=30, choices=STATUS_CHOICES)
-    owner = models.ForeignKey(Staff, on_delete=models.CASCADE, default=1)
-    is_disposed = models.BooleanField(default=False)
-    components = models.ManyToManyField(Component)
-    
+    status = models.CharField(max_length=5,
+                choices=Status.choices,
+                default=Status.WORKING)
+    date_purchased = models.DateField(blank=True, default=datetime.now)
+    date_deprecated = models.DateField(blank=True, default=datetime.now)
 
-    def __str__(self):
-        return (
-            f"{self.name}({self.label}) is in {self.location} with the note {self.note} with components {self.components}"
-        )
+    components = models.ManyToManyField(Component, blank=True)
 
-    @property
-    def get_name(self):
-        return self.name
 
-    @property
-    def get_status(self):
-        return f'{self.name}-{self.label} is with the status of {self.status}'
-
-    def check_if_deployed(self):
-        shap = Staff.objects.get(id=1)
-        # 1 = SHAP/Default
-        if self.owner == shap:
-            return False
-        else:
+    def is_working(self):
+        if self.status == 'OK':
             return True
 
+    def __str__(self):
+        return f'{self.name} {self.asset_tag}'
 
-    def count_deployed(self):
-        shap = Staff.objects.get(id=1)
-        return Equipment.objects.filter(owner=shap).count()
+    def save(self, *args, **kwargs):
+        random_number = randint(1, 500000)
+        another_number = randint(500000, 999999)
+        
+        
+        try:
+            tag = Equipment.objects.latest('asset_tag')
+            print(tag.asset_tag)
+            if Equipment.objects.get(asset_tag=tag.asset_tag):
+                self.asset_tag = 'SE-' + str(random_number)
+                super(Equipment, self).save(*args, **kwargs)
+                print('Goes here?')
+            else:
+                self.asset_tag = 'SE-' + str(random_number)
+                super(Equipment, self).save(*args, **kwargs)
+                print("There was a constraint2")
+        except IntegrityError:
+            self.asset_tag = 'SE-' + str(another_number)
+            super(Equipment, self).save(*args, **kwargs)
+            print("There was a IntegrityError")
+            print(self.asset_tag)
+        except ObjectDoesNotExist:
+            self.asset_tag = 'SE-' + str(another_number)
+            print('New One')
+        super(Equipment, self).save(*args, **kwargs)
+
+    
         
 
 

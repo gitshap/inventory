@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     # 3rd party
     "debug_toolbar",
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -89,9 +90,9 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'inventory',
+        'NAME': 'dev',
 
-        'USER': 'postgres',
+        'USER': 'dev',
 
         'PASSWORD': '1234',
 
@@ -158,3 +159,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
  
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
